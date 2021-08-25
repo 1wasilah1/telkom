@@ -1,7 +1,8 @@
 import React from 'react';
 
 import axios from 'axios';
-
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 export default class PersonList extends React.Component {
   state = {
     persons: []
@@ -17,9 +18,17 @@ export default class PersonList extends React.Component {
 
   render() {
     return (
-      <ul>
-        { this.state.persons.map(person => <li>{person.name}</li>)}
-      </ul>
+             <form>
+                <h3>Cari</h3>
+
+                <div className="form-group">
+              
+                    <input type="text" className="form-control" placeholder="Enter Username" />
+                </div>
+
+                <button type="submit" className="btn btn-primary btn-block">Cari</button>
+               
+            </form>
     )
   }
 }
