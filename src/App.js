@@ -5,20 +5,24 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 export default class PersonList extends React.Component {
   state = {
-    persons: []
+    ListRepo: []
   }
-
+	async handleSubmit(e) {
+           e.preventDefault();
+		   alert("tes");
+           
+    }
   componentDidMount() {
     axios.get(`https://api.github.com/users/1wasilah1/repos`)
       .then(res => {
-        const persons = res.data;
-        this.setState({ persons });
+        const ListRepo = res.data;
+        this.setState({ ListRepo });
       })
   }
 
   render() {
     return (
-             <form>
+             <form onSubmit={e => this.handleSubmit(e)}>
                 <h3>Cari</h3>
 
                 <div className="form-group">
