@@ -27,6 +27,8 @@ export default class ListRepo extends React.Component {
 			const ListRepo = res.data;
 			this.setState({ ListRepo });
 			this.setState({ loading:true });
+		  }).catch(function(error){
+			  
 		  })
 		  
 	  }
@@ -43,13 +45,11 @@ export default class ListRepo extends React.Component {
 					<button type="submit" className="btn btn-primary btn-block">Cari</button>
 				</form>
 			 
-			  <ul>
-					{ this.state.ListRepo.map(ListRepo => <li>{ListRepo.name}</li>)}
-			  </ul>
+			  <ul>{ this.state.ListRepo.map(ListRepo => <li>{ListRepo.name}</li>)}</ul>
 		</div>
 		)
 	}else{
-
+		
 	  return (
 		<div>
 				 <form onSubmit={e => this.handleSubmit(e)}>
@@ -60,7 +60,7 @@ export default class ListRepo extends React.Component {
 					<button type="submit" className="btn btn-primary btn-block">Cari</button>
 				</form>
 			 
-			  <p>Tidak ada Data</p>
+			 {this.state.ListRepo=''?'':<p>Tidak ada Data</p>}
 		</div>
 		)
 
