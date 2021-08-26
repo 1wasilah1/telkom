@@ -10,10 +10,11 @@ export default class ListRepo extends React.Component {
 	  this.state = {
 		ListRepo: [],
 		loading:false,
-		valid:true
+		countRepo:0
 	  }
 	  this.handleSubmit.bind(this);
 	  this.callingGithub.bind(this);
+	
   }
   
 	async handleSubmit(e) {
@@ -26,32 +27,33 @@ export default class ListRepo extends React.Component {
 		axios.get(`https://api.github.com/users/${username}/repos`)
 		  .then(res => {
 			const ListRepo = res.data;
+			let cRepo = 0;
+			if(ListRepo.length<1)
+				cRepo = 1;
+			else
+				cRepo =2;
 			this.setState({ ListRepo });
 			this.setState({ loading:true });
+			this.setState({ countRepo:cRepo });
 		  }).catch(function(error){
-			  this.setState({ valid:false });
+			  alert("Username Github Tidak Ditemukan");
 		  })
-		  
 	  }
 
   render() {
-	if(this.state.loading){
-		return (
-		<div>
-				 <form onSubmit={e => this.handleSubmit(e)}>
-					<h3>Cari</h3>
-					<div className="form-group">
-						<input type="text" name="githubUser" className="form-control" placeholder="Enter Username" />
-					</div>
-					<button type="submit" className="btn btn-primary btn-block">Cari</button>
-				</form>
-			 
-			  <ul>{ this.state.ListRepo.map(ListRepo => <li>{ListRepo.name}</li>)}</ul>
-		</div>
-		)
-	}else{
+	const Results = () => (
+	  <div id="results" className="search-results">
+		{this.state.loading?<ViewResults/>:<NothingResults/>}
+	  </div>
+	)
+	const ViewResults = () => (
+		<ul>{ this.state.ListRepo.map(ListRepo => <li>{ListRepo.name}</li>)}</ul>
+	)
+	const NothingResults = () => (
+		<p>Silahkan Melakukan Pencaharian Akun Github</p>
+	)
 		
-	  return (
+	 return (
 		<div>
 				 <form onSubmit={e => this.handleSubmit(e)}>
 					<h3>Cari</h3>
@@ -61,11 +63,9 @@ export default class ListRepo extends React.Component {
 					<button type="submit" className="btn btn-primary btn-block">Cari</button>
 				</form>
 			 
-			 {this.state.ListRepo=''?'':<p>Tidak ada Data</p>}
+			 
+			 {this.state.countRepo==1?'User ini tidak memiliki repository':<Results/>}
 		</div>
-		)
-
-	}
-	
+	)
   }
 }
