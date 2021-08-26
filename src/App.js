@@ -9,7 +9,8 @@ export default class ListRepo extends React.Component {
 	  super(props);
 	  this.state = {
 		ListRepo: [],
-		loading:false
+		loading:false,
+		valid:true
 	  }
 	  this.handleSubmit.bind(this);
 	  this.callingGithub.bind(this);
@@ -28,7 +29,7 @@ export default class ListRepo extends React.Component {
 			this.setState({ ListRepo });
 			this.setState({ loading:true });
 		  }).catch(function(error){
-			  
+			  this.setState({ valid:false });
 		  })
 		  
 	  }
