@@ -8,7 +8,8 @@ export default class PersonList extends React.Component {
   constructor(props){
 	  super(props);
 	  this.state = {
-		ListRepo: []
+		ListRepo: [],
+		loading:false
 	  }
 	  this.handleSubmit.bind(this);
   }
@@ -27,6 +28,9 @@ export default class PersonList extends React.Component {
   }
 
   render() {
+	if(this.state.loading){
+		
+	}else{
     return (
              <form onSubmit={e => this.handleSubmit(e)}>
                 <h3>Cari</h3>
@@ -40,5 +44,6 @@ export default class PersonList extends React.Component {
                
             </form>
     )
+	}
   }
 }
